@@ -45,7 +45,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(776, 59);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "문서 생성 / Generate";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -62,9 +62,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 318);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 12);
+            this.label1.Size = new System.Drawing.Size(147, 12);
             this.label1.TabIndex = 2;
-            this.label1.Text = "label1";
+            this.label1.Text = "주 언어 / Main Language";
             // 
             // rbKR
             // 
@@ -139,7 +139,7 @@
             this.Controls.Add(this.tbResult);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "CShap Multilingual Markdown Generator";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

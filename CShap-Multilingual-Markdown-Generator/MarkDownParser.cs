@@ -42,22 +42,19 @@ namespace MultiLanguageMarkDownGenerator
             Error
         }
 
-
         private const string KeyLanguageStart = "<!--";
-        private const string KeyEn = "<!--[en-US]-->";
-        private const string KeyKo = "<!--[ko-KR]-->";
-        private const string KeyJp = "<!--[ja-JP]-->";
-        private const string KeyFr = "<!--[fr-FR]-->";
+        private const string KeyEn = "<!--[en-us]-->";
+        private const string KeyKo = "<!--[ko-kr]-->";
+        private const string KeyJp = "<!--[ja-jp]-->";
+        private const string KeyFr = "<!--[fr-fr]-->";
         private const string KeyCommon = "<!--[common]-->";
         private const string KeyIgonre = "<!--[ignore]-->";
         private const string KeyLink = "<!--[document_link]-->";
-
 
         private Dictionary<LanguageType, bool> _usingLanguage = new Dictionary<LanguageType, bool>();
         private Dictionary<LanguageType, StringBuilder> _dataDic = new Dictionary<LanguageType, StringBuilder>();
         private Dictionary<LanguageType, LanguageInformation> _infoDic = new Dictionary<LanguageType, LanguageInformation>();
         private string _baseFileName;
-
 
         private void Init()
         {
@@ -72,31 +69,46 @@ namespace MultiLanguageMarkDownGenerator
         }
 
 
-        public void GenerateDocument(string filePath, string baseFileName, LanguageType mainLanguage)
+        public void GenerateDocument(string filePath, string baseFileName, LanguageType mainLanguage, StringBuilder logBuilder)
         {
             Init();
             _baseFileName = baseFileName;
             //두번 읽는다.
             string[] lines = System.IO.File.ReadAllLines(filePath);
             InitializeLanguage(lines);
+
+            if (_usingLanguage.Count == 0)
+            {
+                logBuilder.AppendLine("언어 키워드가 없습니다! 언어 키워를 문서에 포함해 주세요");
+                logBuilder.AppendLine("ex : <!--[ko-KR]-->");
+
+                _usingLanguage[mainLanguage] = true;
+            }
+
             ParseLines(lines);
+ 
 
             //저장한다
+
+            if (!_dataDic.ContainsKey(mainLanguage))
+            {
+                logBuilder.AppendLine("선택한 주 언어가 문서에 포함되지 않았습니다!");
+
+                mainLanguage = _dataDic.First().Key;
+            }
+
             string savePath = Path.GetDirectoryName(filePath) + @"\";
             foreach (var pair in _dataDic)
             {
                 string fileName = $"{_baseFileName}.{_infoDic[pair.Key].FileName}.md";
 
                 System.IO.File.WriteAllText($@"{savePath}{fileName}", pair.Value.ToString());
-            }
 
-            if(!_dataDic.ContainsKey(mainLanguage))
-            {
-                mainLanguage = _dataDic.First().Key;
-            }
-
+                logBuilder.AppendLine($"{_infoDic[pair.Key].Display} : {fileName} 생성");
+            }    
 
             System.IO.File.WriteAllText($@"{savePath}{_baseFileName}.md", _dataDic[mainLanguage].ToString());
+            logBuilder.AppendLine($"주 문서 : {_baseFileName} 생성");
 
         }
 
@@ -145,7 +157,6 @@ namespace MultiLanguageMarkDownGenerator
             return LanguageType.Common;
         }
 
-
         private void InitializeLanguage(string[] lines)
         {
             foreach (string readLine in lines)
@@ -185,7 +196,7 @@ namespace MultiLanguageMarkDownGenerator
 
             foreach (var readLine in lines)
             {
-                string line = readLine.Replace(" ", "");
+                string line = readLine.Replace(" ", "").ToLower();
                 CommandType command = ParaseCommand(line);
 
                 if (currentCommand == CommandType.Igonore && command == CommandType.None)
