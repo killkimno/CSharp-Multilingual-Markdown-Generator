@@ -161,7 +161,7 @@ namespace MultiLanguageMarkDownGenerator
         {
             foreach (string readLine in lines)
             {
-                string line = readLine.Replace(" ", "");
+                string line = readLine.Replace(" ", "").ToLower();
 
                 switch (line)
                 {
@@ -250,14 +250,24 @@ namespace MultiLanguageMarkDownGenerator
 
         private void AddDocumentLink()
         {
-            string link = "";
+            string link = "🌏";
+            int index = 1;
             foreach (var pair in _usingLanguage)
             {
+                
                 string display = _infoDic[pair.Key].Display;
                 string fileName = $"{_baseFileName}.{_infoDic[pair.Key].FileName}.md";
 
-                link += $"[{display}]({fileName}){System.Environment.NewLine}";
-              
+                if(index < _usingLanguage.Count)
+                {
+                    link += $"[{display}]({fileName}) | ";
+                }
+                else
+                {
+                    link += $"[{display}]({fileName}){System.Environment.NewLine}{System.Environment.NewLine}";
+                }
+         
+                index++;
             }
 
             //TODO : 현재 선택한 주 언어는 제외해야 한다
