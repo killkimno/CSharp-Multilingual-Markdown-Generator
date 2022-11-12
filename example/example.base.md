@@ -1,5 +1,3 @@
-<!--[document_link]-->
-
 <!-- [common] -->
 ![Sample img](sample.jpg)
 
@@ -10,7 +8,7 @@
 <!-- [en-US] -->
 This project is based on ryul1206's multilingual-markdown project.
 <!-- [common] -->
-[Link : ](https://github.com/ryul1206/multilingual-markdown)
+[Link : https://github.com/ryul1206/multilingual-markdown ](https://github.com/ryul1206/multilingual-markdown)
 
 <!-- [ko-KR] -->
 # 예제 문서
