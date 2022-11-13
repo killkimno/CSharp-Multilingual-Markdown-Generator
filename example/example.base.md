@@ -5,7 +5,7 @@
 Hear Ye! Hear Ye!
 
 <!-- [kr] -->
-이 프로젝트는 ryul1206님의 multilingual-markdown 프로젝트를 기반으로 만들어 졌습니다.
+이 프로젝트는 ryul1206님의 multilingual-markdown 프로젝트를 기반으로 만들어졌습니다.
 <!-- [en] -->
 This project is based on ryul1206's multilingual-markdown project.
 <!-- [common] -->

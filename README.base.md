@@ -4,7 +4,7 @@
 <!--[kr]-->
 다국어 마크다운 문서 생성기
 
-이 프로젝트는 ryul1206님의 multilingual-markdown 프로젝트를 기반으로 만들어 졌습니다.
+이 프로젝트는 ryul1206님의 multilingual-markdown 프로젝트를 기반으로 만들어졌습니다.
 <!--[en]-->
 Multilingual Markdown Generator
 
@@ -42,7 +42,7 @@ ex : Readme.base.md
 <!--[en]-->
 ### Generate Documnet
 <!--[kr]-->
-문서 생성 / Generate 버튼을 이용해 파일을 선택후 만듭니다
+문서 생성 / Generate 버튼을 이용해 파일을 선택 후 만듭니다
 <!--[en]-->
 Use '문서 생성 / Generate' button to select a file and create it
 
@@ -132,7 +132,7 @@ This area is used for comments. Text specified in this area will not be included
 
 
 <!--[kr]-->
-이 키워드가 있는 곳는 언어별 문서 링크 텍스트로 대체됩니다. 문서에 포함된 언어를 자동으로 링크해 줍니다
+이 키워드가 있는 곳은 언어별 문서 링크 텍스트로 대체됩니다. 문서에 포함된 언어를 자동으로 링크해 줍니다
 <!--[en]-->
 Wherever this keyword appears, it will be replaced with the language-specific document link text. 
 Automatically links to languages embedded in documents
