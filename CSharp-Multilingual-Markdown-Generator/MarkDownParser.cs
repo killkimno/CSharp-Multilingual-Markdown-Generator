@@ -43,29 +43,41 @@ namespace MultiLanguageMarkDownGenerator
         }
 
         private const string KeyLanguageStart = "<!--";
-        private const string KeyEn = "<!--[en-us]-->";
-        private const string KeyKo = "<!--[ko-kr]-->";
-        private const string KeyJp = "<!--[ja-jp]-->";
-        private const string KeyFr = "<!--[fr-fr]-->";
+        private const string KeyEn = "<!--[en]-->";
+        private const string KeyKr = "<!--[kr]-->";
+        private const string KeyJp = "<!--[ja]-->";
+        private const string KeyFr = "<!--[fr]-->";
+
+        private const string KeyEnFull = "<!--[en-us]-->";
+        private const string KeyKrFull = "<!--[ko-kr]-->";
+        private const string KeyJpFull = "<!--[ja-jp]-->";
+        private const string KeyFrFull = "<!--[fr-fr]-->";
+
         private const string KeyCommon = "<!--[common]-->";
         private const string KeyIgonre = "<!--[ignore]-->";
         private const string KeyLink = "<!--[document_link]-->";
+
+        private const string KeyIgonoreParse = "```";
 
         private Dictionary<LanguageType, bool> _usingLanguage = new Dictionary<LanguageType, bool>();
         private Dictionary<LanguageType, StringBuilder> _dataDic = new Dictionary<LanguageType, StringBuilder>();
         private Dictionary<LanguageType, LanguageInformation> _infoDic = new Dictionary<LanguageType, LanguageInformation>();
         private string _baseFileName;
+        private bool _igonoreParse;
+
+
 
         private void Init()
         {
+            _igonoreParse = false;
             _infoDic.Clear();
             _usingLanguage.Clear();
             _dataDic.Clear();
 
-            _infoDic.Add(LanguageType.Kr, new LanguageInformation(LanguageType.Kr, "ko-KR", "한국어"));
-            _infoDic.Add(LanguageType.En, new LanguageInformation(LanguageType.En, "en-US", "English"));
-            _infoDic.Add(LanguageType.Jp, new LanguageInformation(LanguageType.Jp, "ja-JP", "日本語"));
-            _infoDic.Add(LanguageType.Fr, new LanguageInformation(LanguageType.Fr, "fr-FR", "Français"));
+            _infoDic.Add(LanguageType.Kr, new LanguageInformation(LanguageType.Kr, "kr", "한국어"));
+            _infoDic.Add(LanguageType.En, new LanguageInformation(LanguageType.En, "en", "English"));
+            _infoDic.Add(LanguageType.Jp, new LanguageInformation(LanguageType.Jp, "ja", "日本語"));
+            _infoDic.Add(LanguageType.Fr, new LanguageInformation(LanguageType.Fr, "fr", "Français"));
         }
 
 
@@ -114,6 +126,24 @@ namespace MultiLanguageMarkDownGenerator
 
         private CommandType ParaseCommand(string line)
         {
+            if(line == KeyIgonoreParse)
+            {
+                if(!_igonoreParse)
+                {
+                    _igonoreParse = true;
+                    return CommandType.None;
+                }
+                else
+                {
+                    _igonoreParse = false;
+                }
+            }
+
+            if(_igonoreParse)
+            {
+                return CommandType.None;
+            }
+
             if (line == KeyIgonre)
             {
                 return CommandType.Igonore;
@@ -137,15 +167,19 @@ namespace MultiLanguageMarkDownGenerator
             switch (line)
             {
                 case KeyEn:
+                case KeyEnFull:
                     return LanguageType.En;
 
-                case KeyKo:
+                case KeyKr:
+                case KeyKrFull:
                     return LanguageType.Kr;
 
                 case KeyJp:
+                case KeyJpFull:
                     return LanguageType.Jp;
 
                 case KeyFr:
+                case KeyFrFull:
                     return LanguageType.Fr;
 
                 case KeyCommon:
@@ -163,25 +197,49 @@ namespace MultiLanguageMarkDownGenerator
             {
                 string line = readLine.Replace(" ", "").ToLower();
 
+                if (line == KeyIgonoreParse)
+                {
+                    if (!_igonoreParse)
+                    {
+                        _igonoreParse = true;
+                        continue;
+                    }
+                    else
+                    {
+                        _igonoreParse = false;
+                    }
+                }
+
+                if(_igonoreParse)
+                {
+                    continue;
+                }
+
                 switch (line)
                 {
                     case KeyEn:
+                    case KeyEnFull:
                         _usingLanguage[LanguageType.En] = true;
                         break;
 
-                    case KeyKo:
+                    case KeyKr:
+                    case KeyKrFull:
                         _usingLanguage[LanguageType.Kr] = true;
                         break;
 
                     case KeyJp:
+                    case KeyJpFull:
                         _usingLanguage[LanguageType.Jp] = true;
                         break;
 
                     case KeyFr:
+                    case KeyFrFull:
                         _usingLanguage[LanguageType.Fr] = true;
                         break;
                 }
             }
+
+            _igonoreParse = false;
         }
 
         private void ParseLines(string[] lines)
