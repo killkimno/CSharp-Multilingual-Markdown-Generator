@@ -4,21 +4,21 @@
 
 Hear Ye! Hear Ye!
 
-<!-- [ko-KR] -->
+<!-- [kr] -->
 이 프로젝트는 ryul1206님의 multilingual-markdown 프로젝트를 기반으로 만들어 졌습니다.
-<!-- [en-US] -->
+<!-- [en] -->
 This project is based on ryul1206's multilingual-markdown project.
 <!-- [common] -->
 [Link : https://github.com/ryul1206/multilingual-markdown ](https://github.com/ryul1206/multilingual-markdown)
 
-<!-- [ko-KR] -->
+<!-- [kr] -->
 # 예제 문서
-<!-- [en-US] -->
+<!-- [en] -->
 # Sample Document
 
-<!-- [ko-KR] -->
+<!-- [kr] -->
 이 문서는 'base' 문서로 부터 생성된 결과입니다.
-<!-- [en-US] -->
+<!-- [en] -->
 This document is the output from the 'base' document.
 <!-- [common] -->
 
